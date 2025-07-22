@@ -1,11 +1,9 @@
 'use client';
 
-import { List, useTable, EditButton, DeleteButton, CreateButton } from "@refinedev/antd";
-import { Table, Space, Tag, Input } from "antd";
+import { List, useTable, EditButton, DeleteButton, CreateButton, ShowButton } from "@refinedev/antd";
+import { Table, Space, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { useNavigation } from "@refinedev/core";
 import { Task, TaskStatus } from "@/types/task";
-import { SearchOutlined } from "@ant-design/icons";
 
 const getStatusColor = (status: TaskStatus) => {
   switch (status) {
@@ -87,11 +85,19 @@ export default function TaskList() {
     },
     {
       title: 'Actions',
-      key: 'actions',
+      dataIndex: 'actions',
       render: (_, record) => (
         <Space>
-          <EditButton hideText size="small" recordItemId={record.id} />
-          <DeleteButton hideText size="small" recordItemId={record.id} />
+          <EditButton 
+            hideText 
+            size="small" 
+            recordItemId={record.id}
+          />
+          <DeleteButton 
+            hideText 
+            size="small" 
+            recordItemId={record.id}
+          />
         </Space>
       ),
     },
@@ -100,7 +106,10 @@ export default function TaskList() {
   return (
     <List>
       <div style={{ marginBottom: 16 }}>
-        <CreateButton resource="tasks" />
+        <CreateButton 
+          resource="tasks"
+          // Remove any replace prop and other unnecessary props
+        />
       </div>
       <Table 
         {...tableProps} 
@@ -109,6 +118,7 @@ export default function TaskList() {
         pagination={{
           ...tableProps.pagination,
           showSizeChanger: true,
+          pageSize: 10
         }}
       />
     </List>

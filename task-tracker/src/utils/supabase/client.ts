@@ -8,5 +8,10 @@ export const supabaseBrowserClient = createBrowserClient(
     db: {
       schema: "public",
     },
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    },
   }
 );

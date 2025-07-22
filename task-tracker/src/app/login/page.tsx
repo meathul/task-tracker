@@ -1,7 +1,6 @@
 'use client';
 
-import { AuthPage } from "@refinedev/antd";
-import { ThemedTitleV2 } from "@refinedev/antd";
+import { AuthPage, ThemedTitleV2 } from "@refinedev/antd";
 import { Button } from "antd";
 import Link from "next/link";
 
@@ -16,17 +15,16 @@ export default function Login() {
           password: "",
         },
       }}
-      rememberMe={false}
       registerLink={
         <Link href="/register">
-          <Button type="link" style={{ padding: 0 }}>
+          <Button type="link" size="small">
             Don't have an account? Sign up
           </Button>
         </Link>
       }
       forgotPasswordLink={
         <Link href="/forgot-password">
-          <Button type="link" style={{ padding: 0 }}>
+          <Button type="link" size="small">
             Forgot password?
           </Button>
         </Link>

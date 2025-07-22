@@ -10,8 +10,11 @@ import {
   Switch,
   theme,
   Typography,
+  Button,
 } from "antd";
+import { LogoutOutlined } from "@ant-design/icons";
 import React, { useContext } from "react";
+import { useLogout } from "@refinedev/core";
 
 const { Text } = Typography;
 const { useToken } = theme;
@@ -28,6 +31,7 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
   const { token } = useToken();
   const { data: user } = useGetIdentity<IUser>();
   const { mode, setMode } = useContext(ColorModeContext);
+  const { mutate: logout } = useLogout();
 
   const headerStyles: React.CSSProperties = {
     backgroundColor: token.colorBgElevated,
@@ -46,7 +50,15 @@ export const Header: React.FC<RefineThemedLayoutV2HeaderProps> = ({
 
   return (
     <AntdLayout.Header style={headerStyles}>
-      <Space>
+      <Space align="center" size="middle">
+        <Button 
+          type="text"
+          icon={<LogoutOutlined />}
+          onClick={() => logout()}
+          style={{ color: token.colorText }}
+        >
+          Sign Out
+        </Button>
         <Switch
           checkedChildren="🌛"
           unCheckedChildren="🔆"
