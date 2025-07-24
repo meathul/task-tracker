@@ -40,6 +40,20 @@ export const ColorModeContextProvider: React.FC<
     }
   }, [isMounted]);
 
+  useEffect(() => {
+    if (isMounted) {
+      // Apply theme class to HTML element for global styling
+      const htmlElement = document.documentElement;
+      if (mode === "dark") {
+        htmlElement.classList.add("dark");
+        htmlElement.classList.remove("light");
+      } else {
+        htmlElement.classList.add("light");
+        htmlElement.classList.remove("dark");
+      }
+    }
+  }, [mode, isMounted]);
+
   const setColorMode = () => {
     if (mode === "light") {
       setMode("dark");

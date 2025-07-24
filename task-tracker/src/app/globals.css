@@ -1,0 +1,33 @@
+/* Global styles for theme support */
+html.light {
+  background-color: #ffffff;
+}
+
+html.dark {
+  background-color: #000000;
+}
+
+html.light body {
+  background-color: #ffffff;
+}
+
+html.dark body {
+  background-color: #000000;
+}
+
+/* Ensure smooth transitions between themes */
+html, body {
+  transition: background-color 0.3s ease;
+}
+
+/* Override any default margins/padding that might interfere */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Ensure the root container takes full height */
+#__next {
+  min-height: 100vh;
+}

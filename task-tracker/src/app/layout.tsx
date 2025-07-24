@@ -7,12 +7,15 @@ import { cookies } from "next/headers";
 import React, { Suspense } from "react";
 import { App as AntdApp, Layout } from "antd";
 import { Header } from "@components/header";
+import { ThemedLayout, ThemedMain } from "@components/themed-layout";
 
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ColorModeContextProvider } from "@contexts/color-mode";
+import { GamificationProvider } from "@contexts/gamification";
 import { authProviderClient } from "@providers/auth-provider/auth-provider.client";
 import { dataProvider } from "@providers/data-provider";
 import "@refinedev/antd/dist/reset.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Task Tracker",
@@ -32,13 +35,14 @@ export default function RootLayout({
   const defaultMode = theme?.value === "dark" ? "dark" : "light";
 
   return (
-    <html lang="en">
+    <html lang="en" className={defaultMode}>
       <body>
         <Suspense fallback={<div>Loading...</div>}>
           <RefineKbarProvider>
             <AntdRegistry>
               <ColorModeContextProvider defaultMode={defaultMode}>
-                <AntdApp>
+                <GamificationProvider>
+                  <AntdApp>
                   <Refine
                     routerProvider={routerProvider}
                     authProvider={authProviderClient}
@@ -46,6 +50,18 @@ export default function RootLayout({
                     notificationProvider={notificationProvider}
                     catchAll={<ErrorComponent />}
                     resources={[
+                      {
+                        name: "dashboard",
+                        list: "/dashboard",
+                        meta: {
+                          label: "Dashboard",
+                          icon: "📊",
+                          auth: {
+                            required: true,
+                            redirectTo: "/login",
+                          },
+                        },
+                      },
                       {
                         name: "tasks",
                         list: "/tasks",
@@ -67,22 +83,19 @@ export default function RootLayout({
                       projectId: "task-tracker",
                     }}
                   >
-                    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                    <ThemedLayout>
                       <Header />
-                      <main style={{ 
-                        flex: 1,
-                        padding: '24px',
-                        backgroundColor: 'rgb(244, 244, 244)'
-                      }}>
+                      <ThemedMain>
                         {children}
-                      </main>
-                    </div>
+                      </ThemedMain>
+                    </ThemedLayout>
                     <RefineKbar />
                   </Refine>
                 </AntdApp>
-              </ColorModeContextProvider>
-            </AntdRegistry>
-          </RefineKbarProvider>
+              </GamificationProvider>
+            </ColorModeContextProvider>
+          </AntdRegistry>
+        </RefineKbarProvider>
         </Suspense>
       </body>
     </html>
